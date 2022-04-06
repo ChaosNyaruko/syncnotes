@@ -14,13 +14,10 @@ a simple sync app, essentially wrapping some git operations.
 ## Usage
 
 ## TODOs
-[] add a daily mode, when it works in 'daily' mode, the commit message will be YYYY/DD/MM hh:mm:ss, maybe add username or something else
-
-[] specify custom path
-
-[] support -m option like git, so we can avoid launching editor 
-
-[] specify and work in multiple paths
+- [ ] add a daily mode, when it works in 'daily' mode, the commit message will be YYYY/DD/MM hh:mm:ss, maybe add username or something else
+- [ ] specify custom path
+- [ ] support -m option like git, so we can avoid launching editor 
+- [ ] specify and work in multiple paths
 
 
 ## LICENSE
