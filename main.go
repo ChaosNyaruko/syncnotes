@@ -6,12 +6,14 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"time"
 )
 
 // TODO: define my own var to implement list values (e.g. -o dotfile dollop )
 // check https://pkg.go.dev/flag#Value.
 var obj = flag.String("o", "", "where you want to launch the sync process")
 var p = flag.Bool("p", false, "whether automatically push commit to remote")
+var m = flag.String("m", time.Now().Format("2006/01/02 15:04:05"), "message you want to add as git commit messages")
 
 func main() {
 	flag.Parse()
@@ -31,8 +33,7 @@ func main() {
 		log.Fatal("a sync path must be given!")
 	}
 
-	fmt.Printf("current dir:'%v' push:'%v' obj:'%v'\n", path, *p, *obj)
-
+	fmt.Printf("current dir:'%v' push:'%v' obj:'%v' message:'%v'\n", path, *p, *obj, *m)
 	if err := pull(*obj); err != nil {
 		log.Println(err)
 	}
