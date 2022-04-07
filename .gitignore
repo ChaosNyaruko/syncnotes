@@ -1,0 +1,7 @@
+syncnote
+output/
+.vscode
+.idea
+.swp
+~
+log/
