@@ -10,29 +10,37 @@ import (
 
 // TODO: define my own var to implement list values (e.g. -o dotfile dollop )
 // check https://pkg.go.dev/flag#Value.
-var obj = flag.String("o", "./tmp", "where you want to launch the sync process")
+var obj = flag.String("o", "", "where you want to launch the sync process")
 var p = flag.Bool("p", false, "whether automatically push commit to remote")
 
 func main() {
 	flag.Parse()
-	log.Println(*p)
+	path, err := os.Getwd()
+	// path, err := os.Executable()
+	if err != nil {
+		log.Fatal(path)
+	}
 	// var objs  = []string{}
-	var dotfilesPath string
 	if home, err := os.UserHomeDir(); err != nil {
 		log.Fatal(err)
 	} else {
-		dotfilesPath = home + "/GitPrjs/dotfiles"
-		log.Println(home, dotfilesPath)
+		fmt.Println("$HOME:", home)
 	}
 
-	if err := pull(dotfilesPath); err != nil {
+	if *obj == "" {
+		log.Fatal("a sync path must be given!")
+	}
+
+	fmt.Printf("current dir:'%v' push:'%v' obj:'%v'\n", path, *p, *obj)
+
+	if err := pull(*obj); err != nil {
 		log.Println(err)
 	}
-	if err := commit(dotfilesPath); err != nil {
+	if err := commit(*obj); err != nil {
 		log.Println(err)
 	}
 	if *p {
-		if err := push(dotfilesPath); err != nil {
+		if err := push(*obj); err != nil {
 			log.Println(err)
 		}
 	}
