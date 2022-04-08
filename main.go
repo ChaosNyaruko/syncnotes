@@ -9,11 +9,13 @@ import (
 	"time"
 )
 
-// check https://pkg.go.dev/flag#Value.
+var Version = "v0.0.3"
+
 var p = flag.Bool("p", false, "whether automatically push commit to remote")
 var m = flag.String("m", time.Now().Format("2006/01/02 15:04:05"), "message you want to add as git commit messages")
 var a = flag.Bool("a", false, "whether to launch your editor when commit, analogous to git commit -a, it OVERWRITES -m message")
 var f = flag.Bool("f", false, "whether fetch/pull from remote first")
+var v = flag.Bool("v", false, "show version")
 
 var objs myList
 
@@ -21,6 +23,10 @@ func main() {
 	flag.Var(&objs, "o", "specify where you want to execute the sync process")
 	flag.Parse()
 	// fmt.Printf(" push:'%v' objs:'%v' message:'%v'\n", *p, objs, *m)
+	if *v {
+		fmt.Printf("syncnotes version: %v\n", Version)
+		return
+	}
 	path, err := os.Getwd()
 	// path, err := os.Executable()
 	if err != nil {
