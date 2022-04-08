@@ -17,7 +17,7 @@ a simple sync app, essentially wrapping some git operations.
 - [ ] add a daily mode, when it works in 'daily' mode, the commit message will be YYYY/DD/MM hh:mm:ss, maybe add username or something else
 - [x] specify custom path
 - [x] support -m option like git, so we can avoid launching editor 
-- [ ] specify and work in multiple paths
+- [x] specify and work in multiple paths
 - [ ] add an option that allows custom tracked files instead of 'git add .'
 
 

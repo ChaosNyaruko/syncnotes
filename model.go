@@ -1,9 +1,11 @@
 package main
 
+import "fmt"
+
 type myList []string
 
 func (v *myList) String() string {
-	return "this is mylist"
+	return fmt.Sprintf("%q", *v)
 }
 
 func (v *myList) Set(value string) error {
