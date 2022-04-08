@@ -1,3 +1,12 @@
+installAs = "/usr/local/bin/syncnotes"
+build:
+	go build -o output/syncnotes main.go model.go
+install:
+	cp output/syncnotes ${installAs}
+uninstall:
+	rm ${installAs}
+clean:
+	rm output/*
 run:
 	go run main.go model.go -p -o "${HOME}/GitPrjs/dotfiles"
 message:
