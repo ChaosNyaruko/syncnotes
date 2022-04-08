@@ -12,6 +12,8 @@ import (
 // check https://pkg.go.dev/flag#Value.
 var p = flag.Bool("p", false, "whether automatically push commit to remote")
 var m = flag.String("m", time.Now().Format("2006/01/02 15:04:05"), "message you want to add as git commit messages")
+var a = flag.Bool("a", false, "whether to launch your editor when commit, analogous to git commit -a, it OVERWRITES -m message")
+var f = flag.Bool("f", false, "whether fetch/pull from remote first")
 
 var objs myList
 
@@ -35,12 +37,14 @@ func main() {
 	}
 
 	for _, obj := range objs {
-		fmt.Printf("current dir:'%v' push:'%v' obj:'%v' message:'%v'\n", path, *p, obj, *m)
-		if err := pull(obj); err != nil {
-			log.Println(err)
-			continue
+		fmt.Printf("current dir:'%v' push:'%v' obj:'%v' message:'%v' dasha: %t\n", path, *p, obj, *m, *a)
+		if *f {
+			if err := pull(obj); err != nil {
+				log.Println(err)
+				continue
+			}
 		}
-		if err := commit(obj, *m); err != nil {
+		if err := commit(obj, *m, *a); err != nil {
 			log.Println(err)
 			continue
 		}
@@ -65,7 +69,7 @@ func pull(path string) error {
 	return nil
 }
 
-func commit(path string, message string) error {
+func commit(path string, message string, a bool) error {
 	add := exec.Command("git", "add", ".")
 	add.Dir = path
 	add.Stdout = os.Stdout
@@ -75,7 +79,9 @@ func commit(path string, message string) error {
 	}
 	log.Println("committing..")
 	commit := exec.Command("git", "commit", "-m", message)
-	// TODO: specify the commit msg without launch editor
+	if a {
+		commit = exec.Command("git", "commit", "-a")
+	}
 	commit.Dir = path
 	commit.Stdout = os.Stdout
 	commit.Stderr = os.Stderr

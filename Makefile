@@ -8,7 +8,7 @@ uninstall:
 clean:
 	rm output/*
 run:
-	go run main.go model.go -p -o "${HOME}/GitPrjs/dotfiles"
+	go run main.go model.go -p -o "${HOME}/GitPrjs/dotfiles" -a
 message:
 	go run main.go model.go -o "${HOME}/GitPrjs/dotfiles" -m "test-${RAND}"
 objs:
