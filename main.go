@@ -37,7 +37,7 @@ func main() {
 	if err := pull(*obj); err != nil {
 		log.Println(err)
 	}
-	if err := commit(*obj); err != nil {
+	if err := commit(*obj, *m); err != nil {
 		log.Println(err)
 	}
 	if *p {
@@ -59,9 +59,16 @@ func pull(path string) error {
 	return nil
 }
 
-func commit(path string) error {
+func commit(path string, message string) error {
+	add := exec.Command("git", "add", ".")
+	add.Dir = path
+	add.Stdout = os.Stdout
+	add.Stderr = os.Stderr
+	if err := add.Run(); err != nil {
+		return fmt.Errorf("git add err: %v '%v'", commit, err)
+	}
 	log.Println("committing..")
-	commit := exec.Command("git", "commit", "-a")
+	commit := exec.Command("git", "commit", "-m", message)
 	// TODO: specify the commit msg without launch editor
 	commit.Dir = path
 	commit.Stdout = os.Stdout
