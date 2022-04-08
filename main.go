@@ -15,8 +15,13 @@ var obj = flag.String("o", "", "where you want to launch the sync process")
 var p = flag.Bool("p", false, "whether automatically push commit to remote")
 var m = flag.String("m", time.Now().Format("2006/01/02 15:04:05"), "message you want to add as git commit messages")
 
+var list myList
+
 func main() {
+	flag.Var(&list, "list", "shit")
 	flag.Parse()
+	fmt.Println(list)
+	return
 	path, err := os.Getwd()
 	// path, err := os.Executable()
 	if err != nil {
