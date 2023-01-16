@@ -19,7 +19,8 @@ a simple sync app, essentially wrapping some git operations.
 - [x] support -m option like git, so we can avoid launching editor 
 - [x] specify and work in multiple paths
 - [ ] add an option that allows custom tracked files instead of 'git add .'
-- [ ] add -v for version
+- [x] add -v for version
+- [ ] maybe a register-mode(record in a dot file) would be nice?
 
 
 ## LICENSE
